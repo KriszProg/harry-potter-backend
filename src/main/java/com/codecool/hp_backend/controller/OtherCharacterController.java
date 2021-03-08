@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin
 public class OtherCharacterController {
@@ -42,16 +45,13 @@ public class OtherCharacterController {
     @PutMapping("/character/{id}")
     public ResponseEntity<?> updateCharacterById(@PathVariable("id") Long id,
                                                  @RequestBody PotterCharacter character) {
-        dataHandler.updateCharacterById(id, character);
-        return ResponseEntity.ok("Character [" +  character.getName() + "] updated successfully");
-    }
+        Map<Object, Object> model = new HashMap<>();
 
-//    @PutMapping("/character/{id}")
-//    public ResponseEntity<?> updateCharacterById(@PathVariable("id") String id,
-//                                                 @RequestBody PotterCharacter character) {
-//        dataHandler.updateCharacterById(Long.parseLong(id), character);
-//        return ResponseEntity.ok("Character [" +  character.getName() + "] updated successfully");
-//    }
+        dataHandler.updateCharacterById(id, character);
+        model.put("status", "Done");
+        model.put("message", "Character [" +  character.getName() + "] updated successfully");
+        return ResponseEntity.ok(model);
+    }
 
 }
 
